@@ -1,5 +1,6 @@
 # Jia
 # prepare the RData for DeepGWAS training and enhancing.
+# This script only combines all the predictors into RDS data used as input of deepGWAS
 DS=23
 set="B"
 setwd("/proj/yunligrp/users/jwen/SCZ_Pat_12182018/022021_Trainings/")
