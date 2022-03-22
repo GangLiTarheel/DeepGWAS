@@ -8,7 +8,7 @@ DeepGWAS is maintained by Jia Wen [jia_wen@med.unc.edu] and Gang Li [gangliuw@uw
 ## News and Updates
 03.15.2022
 * Version 0.1.0
-  + Gang uploaded the script for training and evluation.
+  + Gang uploaded the script for training and evaluation.
 
 
 ## Installation
@@ -17,7 +17,7 @@ can add later.
 
 ### Data Preparation
 
-
+GWAS summary statistics are needed for enhancement. Functional annotations are also needed.
 
 ### Enhancement
 
