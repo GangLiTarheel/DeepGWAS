@@ -5,10 +5,19 @@ In this work, we developed a 14-layer deep neural network, DeepGWAS, to enhance 
 
 DeepGWAS is maintained by Jia Wen [jia_wen@med.unc.edu] and Gang Li [gangliuw@uw.edu].
 
+* To do list
+  + clean the script
+  + enhancement example
+  + training example
+
 ## News and Updates
+04.17.2022
+* Version 0.2.0
+  + Gang uploaded the example data and the script to generate.
 03.15.2022
 * Version 0.1.0
   + Gang uploaded the script for training and evaluation.
+  
 
 
 ## Installation
