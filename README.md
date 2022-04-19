@@ -11,6 +11,9 @@ DeepGWAS is maintained by Jia Wen [jia_wen@med.unc.edu] and Gang Li [gangliuw@uw
   + training example
 
 ## News and Updates
+04.18.2022
+* Version 0.3.0
+  + Gang uploaded the pre-trained model.
 04.17.2022
 * Version 0.2.0
   + Gang uploaded the example data and the script to generate.
@@ -22,7 +25,8 @@ DeepGWAS is maintained by Jia Wen [jia_wen@med.unc.edu] and Gang Li [gangliuw@uw
 
 ## Installation
 
-can add later.
++ R 3.6.0
++ Tensorflow
 
 ### Data Preparation
 
@@ -45,4 +49,6 @@ R CMD BATCH --no-save --no-restore '--args input_data=train.Rdata output_file="D
 ```
 
 ## Citation
-XXX
+
+1. DeepGWAS ms
+2. PMID: 35396580
