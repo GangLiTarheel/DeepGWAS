@@ -12,8 +12,18 @@ library(pbapply);
 library(tensorflow);
 
 ## prepare the data
-load("/proj/yunligrp/users/gangli/SCZ_pat_08172018/code/2021-11-06-SCZ-EUR/Wave_2c_3_pred.Rdata")
-pred_data$Fathxmm = as.numeric(pred_data$Fathxmm)
+# load("/proj/yunligrp/users/gangli/SCZ_pat_08172018/code/2021-11-06-SCZ-EUR/Wave_2c_3_pred.Rdata")
+# pred_data$Fathxmm = as.numeric(pred_data$Fathxmm)
+
+example_data <- read.table("data/Example_data.txt",header=T)
+
+dim(example_data) # 47386    35
+head(example_data)
+
+select_list<-2:34
+pred_data <- example_data#[,select_list];
+pred_data = data.matrix(pred_data)
+
 dim(pred_data) # 9958786      34    
 head(pred_data)
 
