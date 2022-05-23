@@ -2,7 +2,7 @@
 # 11.06.2021
 # SCZ model with pure EUR population!
 # Wave 2: 108 -> wave 2c: 145
-setwd("~/Documents/GitHub/DeepGWAS")
+#setwd("~/Documents/GitHub/DeepGWAS")
 
 # unlink("~/.R/Makevars")
 # unlink("~/.Renviron")
@@ -77,7 +77,7 @@ library(tensorflow);
 # pred_labledata = data.matrix(pred_data[,select_list])
 # # Warning NAs introduced by coercion
 
-example_data <- read.table("data/Example_data.txt",header=T)
+example_data <- read.table("Example_data.txt",header=T)
 
 dim(example_data) # 47386    35
 head(example_data)
@@ -130,7 +130,7 @@ for (v in 1:length(validation_split)){
       
       history <- model %>% fit(
         trainLabels_matrix, #data.matrix(train_data[,-c(1,4,5,ncol(train_data))]),#trainLabels_matrix,
-        as.numeric( train_data_sub[,ncol(train_data)] > -log10(5e-8) ),
+        as.numeric( example_data[,ncol(example_data)] > -log10(5e-8) ),
         epochs = epoch[e],
         batch_size = batch_size[b],
         validation_split = validation_split[v]
@@ -260,3 +260,165 @@ for (v in 1:length(validation_split)){
 # write.table(enhance3,"Wave3_enhanced.txt",quote = F,sep="\t",col.names=T,row.names = F)
 
 
+## 05.23
+
+# library(shapr)
+
+# # Prepare the data for explanation
+# explainer <- shapr(trainLabels_matrix, model)
+# # Error: 'nafill' is not an exported object from 'namespace:data.table'
+
+final_res <- NULL;
+ablation = 1:33
+for (a in ablation){
+  for (v in 1:length(validation_split)){
+    for(b in 1:length(batch_size)){
+      for(e in 1:length(epoch)){
+        res <- NULL;
+        use_session_with_seed(33);
+        # use_session_with_seed(42, disable_gpu = FALSE, disable_parallel_cpu = FALSE);
+        model <- keras_model_sequential();
+        
+        model %>% 
+          layer_dense(units = 5, activation = 'relu', kernel_initializer = 'orthogonal',input_shape = c(dim(trainLabels_matrix)[2]-1)) %>% 
+          layer_dense(units = 20, activation = 'relu', kernel_initializer = 'orthogonal',input_shape = c(5)) %>% 
+          layer_dense(units = 5, activation = 'relu', kernel_initializer = 'orthogonal',input_shape = c(20)) %>% 
+          layer_dense(units = 10, activation = 'relu',kernel_initializer = 'orthogonal',input_shape = c(5)) %>% 
+          layer_dense(units = 5, activation = 'relu', kernel_initializer = 'orthogonal',input_shape = c(10)) %>% 
+          layer_dense(units = 10, activation = 'relu', kernel_initializer = 'orthogonal',input_shape = c(5)) %>% 
+          layer_dense(units = 5, activation = 'relu',kernel_initializer = 'orthogonal',input_shape = c(10)) %>% 
+          layer_dense(units = 10, activation = 'relu', kernel_initializer = 'orthogonal',input_shape = c(5)) %>% 
+          layer_dense(units = 5, activation = 'relu', kernel_initializer = 'orthogonal',input_shape = c(10)) %>% 
+          layer_dense(units = 10, activation = 'relu',kernel_initializer = 'orthogonal',input_shape = c(5)) %>% 
+          layer_dense(units = 5, activation = 'relu', kernel_initializer = 'orthogonal',input_shape = c(10)) %>% 
+          layer_dense(units = 10, activation = 'relu', kernel_initializer = 'orthogonal',input_shape = c(5)) %>% 
+          layer_dense(units = 5, activation = 'relu', kernel_initializer = 'orthogonal',input_shape = c(10)) %>% 
+          layer_dense(units = 1, activation = 'sigmoid', kernel_initializer = 'orthogonal',input_shape = c(5))
+        
+        model %>% compile(
+          loss = 'binary_crossentropy',
+          optimizer = optimizer_adam(lr = 0.0005),# 0.0005 #0.000005 # 0.01
+          metrics = 'accuracy'
+        )
+        
+        history <- model %>% fit(
+          trainLabels_matrix[,-a], #data.matrix(train_data[,-c(1,4,5,ncol(train_data))]),#trainLabels_matrix,
+          as.numeric( example_data[,ncol(example_data)] > -log10(5e-8) ),
+          epochs = epoch[e],
+          batch_size = batch_size[b],
+          validation_split = validation_split[v]
+        )
+        
+        print(history);
+        save(history, file = paste0("DeepGWAS_Ablation_TrainingHistory_",a,".RData"))
+        # summary(model)
+
+        plot_history = 1
+        if (plot_history==1){
+            jpeg(paste0("DeepGWAS_Ablation_TrainingHistory_",a,".jpeg"))
+            plot(history)
+            dev.off()
+        }
+
+
+      #   additional_output = 0
+      #   if (additional_output ==1){
+      #     jpeg(paste0(output_dir,"TrainingHistory-1.jpeg"))
+      #     plot(history$metrics$acc, main="Model Accuracy", xlab = "epoch", ylab="accuracy", col="blue", type="l")
+      #     # 
+      #     # # Plot the accuracy of the validation data
+      #     lines(history$metrics$val_acc, col="green")
+      #     # 
+      #     # # Add Legend
+      #     legend("bottomright", c("train","test"), col=c("blue", "green"), lty=c(1,1))
+      #     dev.off()
+      #     # set.seed(1);
+      #     score0 <- model %>% evaluate(trainLabels_matrix, as.numeric( train_data_sub[,ncol(train_data_sub)] > -log10(5e-8) ), batch_size = batch_size[b]);
+      #     print(score0);
+      #     classes <- model %>% predict_classes(trainLabels_matrix,batch_size = batch_size[b]);
+      #     # Table 2:
+      #     table2_0 = table(trainLabels_matrix[,ncol(trainLabels_matrix)], factor(classes,levels=0:1));
+        
+      #     #score <- model %>% evaluate(train_data[,select_list], as.numeric(train_data[,ncol(train_data)] > -log10(5e-8) ), batch_size = batch_size[b]);
+      #     #print(score);
+          
+      #     pred <- model %>% predict(pred_labledata,batch_size = batch_size[b]);
+      #     classes <- model %>% predict_classes(pred_labledata,batch_size = batch_size[b]);
+      #     table(classes)
+      #     # Table 2:
+      #     #table2 = table(pred_data$log10P > -log10( 5e-8) , factor(classes,levels=0:1));
+      #     # Table 1:
+      #     observed_pre = ifelse(as.numeric(as.character(pred_data$'log10(p)')) > -log10(5e-8),1,0);
+      #     table(observed_pre)
+      #     #table1 = table(observed_pre,train_data[,1]);
+          
+      #     # Table 3:
+      #     table3 = table(observed_pre,factor(classes,levels=0:1));
+          
+      #     print("Training results:")
+      #     print("Compare enhancement with wave 3:")
+      #     print(table3)
+        
+      #   }
+        
+        save_model = 1
+        save_model_hdf5(model, file = paste0("DeepGWAS_Ablation_Model_",a,".h5"))
+      #   if (save_model==1){
+      #     round = "Run-2021-11-06-1"
+      #     # if (length(select_list) == length(gold_list))
+      #     #   save_model_hdf5(model, file = paste0(output_dir,round,"_DNN_gold.h5"));
+            
+      #     # if (length(select_list) == length(silver_list))
+      #     #   save_model_hdf5(model, file = paste0(output_dir,round,"_DNN_silver.h5"));
+      #     if (length(select_list) == length(diamond_list))
+      #       save_model_hdf5(model, file = paste0(output_dir,round,"_DNN_diamond_baseline.h5"));
+      #     # Load the optimal model back:
+      #     # model <- load_model_hdf5("DNN_1s_2_opt.h5");
+      #   }
+
+      #    # Predict the third wave:
+      #   pred_results=0
+      #   if (pred_results==1){
+      #     pred_gang <- model %>% predict(data.matrix(pred_data[,select_list]))
+      #   #classes_third_wave <- model %>% predict_classes( data.matrix(pred_data)[,select_list],batch_size = batch_size[b]);
+      #   # Table 2:
+      #   #oberserved_third = ifelse( as.numeric(pred_data$P.value) < 5e-08 ,1,0);
+      #   #pred_mat = data.frame(pred_data$SNPID,oberserved_third);
+      #   #write.table(pred_mat,"pred_mat_2c_01202020",col.names = T,row.names = F,sep="\t",quote = F);
+        
+      #   pred_test_label = ifelse(pred_gang > 0.5,1,0);
+      #   #table2_next = table(oberserved_third,factor(pred_test_label,levels=0:1));
+        
+        
+      #   # Table 1:
+      #   #oberserved_second = ifelse(as.numeric(as.character(sub_data_noNAs_2_2c$p2)) < 5e-08,1,0);
+      #   #table1_next = table(oberserved_second,oberserved_third);
+        
+      #   # Table 3:
+      #   #table3_next = table(oberserved_second, factor(classes_third_wave,levels=0:1));
+        
+      #   #acc = (table2_next[1,1] + table2_next[2,2])/(sum(table2_next[1,]) + sum(table2_next[2,]));
+      #   #print(acc);
+        
+      #   #res = c(validation_split[v],batch_size[b],epoch[e],table2[1,],table2[2,],table2_next[1,],table2_next[2,])
+      #   #,table1[1,],table1[2,],
+      #          # table2[1,],table2[2,],table3[1,],table3[2,],
+      #     #      table1_next[1,],table1_next[2,],table2_next[1,],table2_next[2,],table3_next[1,],table3_next[2,],acc);
+      #   #inal_res = rbind(final_res,res);
+        
+      #   #rm("model");
+      #   #rm("res");
+      #  # rm("acc");
+
+      #   print("Enhanced results:")
+      # #print(table2_next)
+        
+        
+        
+      }
+    }
+  }
+}
+
+
+### END
