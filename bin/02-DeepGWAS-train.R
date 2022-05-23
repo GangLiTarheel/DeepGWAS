@@ -2,13 +2,23 @@
 # 11.06.2021
 # SCZ model with pure EUR population!
 # Wave 2: 108 -> wave 2c: 145
+setwd("~/Documents/GitHub/DeepGWAS")
 
+# unlink("~/.R/Makevars")
+# unlink("~/.Renviron")
+# install.packages("tensorflow")
+# install.packages("keras")
 
 # Load packages
 library(keras);
 library(stringr);
 library(pbapply);
 library(tensorflow);
+#install_tensorflow(version = "nightly-gpu")
+#reticulate::py_config()
+# #is_keras_available()
+# tf_config()
+#install_tensorflow()
 
 # # Set output directory
 # date="2021-11-06"
@@ -229,7 +239,7 @@ for (v in 1:length(validation_split)){
     #   print("Enhanced results:")
     # #print(table2_next)
       
-      }
+      
       
     }
   }
