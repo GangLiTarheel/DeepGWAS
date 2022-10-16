@@ -8,7 +8,7 @@ DeepGWAS is maintained by Jia Wen [jia_wen@med.unc.edu] and Gang Li [gangliuw@uw
 
 
 ## News and Updates
-All notable changes to this project will be documented in the changelog.md file.
+All notable changes to this project will be documented in [this file](https://github.com/GangLiTarheel/DeepGWAS/blob/main/changelog.md).
   
 ## Installation
 
