@@ -1,0 +1,23 @@
+# Mac-related
+.DS_Store
+
+plot/.DS_Store
+plot/jaccard_plot/.Rhistory
+plot/jaccard_plot/*.png
+
+# doc
+plot/structure_plot/DeepGWAS_structure.pptx
+
+
+# Directories
+
+doc/*
+
+log/*
+
+results/*
+
+
+
+# R Environment Variables
+.Renviron
