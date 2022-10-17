@@ -5,6 +5,7 @@
 plot/.DS_Store
 plot/jaccard_plot/.Rhistory
 plot/jaccard_plot/*.png
+plot/*
 
 # doc
 plot/structure_plot/DeepGWAS_structure.pptx
