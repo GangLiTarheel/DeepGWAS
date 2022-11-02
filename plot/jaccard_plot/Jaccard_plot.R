@@ -27,14 +27,21 @@ for (i in 1:31){
 }
 sum(is.na(jaccard_matrix))
 
+# 08.21 remove IPS
+# IPS is reprogramming cells, mimic immature early stage stem cell.
+# other data for differentiated tissue/cell type.
+colnames(jaccard_matrix)[14]
+
 library(gplots)
-png("heatmap_XinHe_only.png", width=1000, height=1000)
-heatmap.2(jaccard_matrix, 
+png("heatmap_XinHe_only_high_res.png", width=12, height=12,units="in",res=1200) # 1k 1k
+heatmap.2(jaccard_matrix[-14,-14], 
           col=brewer.pal(9,"Blues"), 
           margins = c(14, 14),
           density.info = "none",
-          lhei = c(2, 8),
-          trace="none")
+          lhei = c(4, 10),
+          trace="none",
+          cexRow = 1.4,
+          cexCol = 1.4)
 dev.off()
 
 # ## read data
@@ -132,11 +139,13 @@ sum(is.na(jaccard_matrix))
 jaccard_matrix[10,10]=1
 
 library(gplots)
-png("heatmap_anno_1.png", width=1000, height=1000)
+png("heatmap_anno_1_high_res.png", width=14, height=14,units="in",res=1200)
 heatmap.2(jaccard_matrix, 
           col=brewer.pal(9,"Blues"), 
           margins = c(14, 14),
           density.info = "none",
-          lhei = c(2, 8),
-          trace="none")
+          lhei = c(4, 10),
+          trace="none",
+          cexRow = 1.4,
+          cexCol = 1.4)
 dev.off()
