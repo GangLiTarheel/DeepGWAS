@@ -3,6 +3,9 @@
 
 In this work, we developed a 14-layer deep neural network, DeepGWAS, to enhance GWAS signals by leveraging GWAS summary statistics (p-value, odds ratio, minor allele frequency, linkage disequilibrium score), as well as brain related functional genomic and epigenomic information (FIRE, super FIRE, open chromatin, eQTL). 
 
+![image](https://github.com/GangLiTarheel/DeepGWAS/blob/main/DeepGWAS-structure.jpg)
+
+
 DeepGWAS is maintained by Jia Wen [jia_wen@med.unc.edu] and Gang Li [gangliuw@uw.edu].
 
 
@@ -12,8 +15,11 @@ All notable changes to this project will be documented in [this file](https://gi
   
 ## Installation
 
+Our DeepGWAS is tested with R 3.6.0 with keras package. See our session info [here](https://github.com/GangLiTarheel/DeepGWAS/blob/main/bin/00-SessionInfo.R).
+
 + R 3.6.0
-+ Tensorflow
++ [tensorflow](https://cran.r-project.org/web/packages/tensorflow/index.html)
++ [keras](https://cran.r-project.org/web/packages/keras/index.html)
 
 ### Data Preparation
 
