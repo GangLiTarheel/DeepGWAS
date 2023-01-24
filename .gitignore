@@ -26,3 +26,5 @@ results/*
 main1-2.jpg
 plot/structure_plot/DeepGWAS_structure.pptx
 *.pptx
+data/MDD_depGWAS_lociInfo_anno_name_prob
+data/MDD_depGWAS_lociInfo_anno_name_prob.csv
