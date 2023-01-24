@@ -16,8 +16,6 @@ Our DeepGWAS is tested with R 3.6.0 with keras package. See our session info [he
    (.venv) $ install.packages("tensorflow")
 
 
-.. _enhancement:
-
 Enhancement
 ----------------
 We provide our pretrained model for users to enhance GWAS signals. User can also use their own data to train a DeepGWAS network for prediction.
@@ -29,12 +27,12 @@ For example:
 
 
 
-### Data Preparation
-
+Data Preparation
+----------------
 GWAS summary statistics are needed for enhancement. Functional annotations are also needed.
 
-### Training
-
+Training
+----------------
 .. code-block:: console
    R CMD BATCH --no-save --no-restore '--args input_data=train.Rdata output_file="DeepGWAS.model.h5"' bin/02-DeepGWAS-train.R
 
