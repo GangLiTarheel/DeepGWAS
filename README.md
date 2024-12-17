@@ -1,7 +1,7 @@
 # DeepGWAS
 ### DeepGWAS to Enhance GWAS Signals for Neuropsychiatric Disorders via Deep Neural Network 
 
-In this work, we developed a 14-layer deep neural network, DeepGWAS, to enhance GWAS signals by leveraging GWAS summary statistics (p-value, odds ratio, minor allele frequency, linkage disequilibrium score), as well as brain related functional genomic and epigenomic information (FIRE, super FIRE, open chromatin, eQTL). 
+In this work, we developed a 14-layer deep neural network, DeepGWAS, to enhance GWAS signals by leveraging GWAS summary statistics (p-value, odds ratio, minor allele frequency, linkage disequilibrium score), as well as brain-related functional genomic and epigenomic information (FIRE, super FIRE, open chromatin, eQTL). 
 
 ![image](https://github.com/GangLiTarheel/DeepGWAS/blob/main/DeepGWAS-structure.jpg)
 
@@ -15,7 +15,7 @@ All notable changes to this project will be documented in [this file](https://gi
   
 ## Installation
 
-Our DeepGWAS is tested with R 3.6.0 with keras package. See our session info [here](https://github.com/GangLiTarheel/DeepGWAS/blob/main/bin/00-SessionInfo.R).
+Our DeepGWAS is tested with R 3.6.0 with the keras package. See our session info [here](https://github.com/GangLiTarheel/DeepGWAS/blob/main/bin/00-SessionInfo.R).
 
 + R 3.6.0
 + [tensorflow](https://cran.r-project.org/web/packages/tensorflow/index.html)
@@ -27,7 +27,7 @@ GWAS summary statistics are needed for enhancement. Functional annotations are a
 
 ### Enhancement
 
-We provide our pretrained model for users to enhance GWAS signals. User can also use their own data to train a DeepGWAS network for prediction.
+We provide our pre-trained model for users to enhance GWAS signals. Users can also use their own data to train a DeepGWAS network for prediction.
 
 ```{R enhancement}
 R CMD BATCH --no-save --no-restore '--args input_data=enhance.Rdata model=DeepGWAS_SCZ.h5 output_file="enhance.txt"' bin/03-DeepGWAS-enhance.R   
